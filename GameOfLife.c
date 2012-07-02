@@ -12,6 +12,7 @@ int tempGrid[ROWS][COLS];
 int getUserInput();
 void initGrid(int, int, int[ROWS][COLS]);
 void processGeneration(int, int, int[ROWS][COLS]);
+void populationUpdate(int, int, int[ROWS][COLS]);
 int countNeighbors(int, int, int[ROWS][COLS], int, int);
 void printGrid(int, int, int[ROWS][COLS]);
 void sleep(unsigned int);
@@ -23,6 +24,7 @@ int main()
     srand((unsigned int) time(NULL));
     int grid[ROWS][COLS];
     initGrid(ROWS, COLS, grid);
+    populationUpdate(ROWS, COLS, grid);
     printGrid(ROWS, COLS, grid);
     
     int i, g;
@@ -31,6 +33,7 @@ int main()
     {
         generation++;
         processGeneration(ROWS, COLS, grid);
+        populationUpdate(ROWS, COLS, grid);
         printGrid(ROWS, COLS, grid);
         sleep(1000);
     }
@@ -44,7 +47,7 @@ int getUserInput()
 {
 	int g;
 	printf("Welcome to the Game of Life.\n");
-	printf("How many generations do you want to watch?");
+	printf("How many generations do you want to watch? ");
 	scanf("%d", &g);
 	return g;
 }
@@ -103,6 +106,11 @@ void processGeneration(int rows, int cols, int g[rows][cols])
             }
         }
     }
+}
+
+void populationUpdate(int rows, int cols, int g[rows][cols])
+{
+    int i, j;
         //clean slate for population counting
     population = 0;
         //population counting
@@ -160,7 +168,7 @@ void printGrid(int rows, int cols, int g[rows][cols])
             {
                 case -1: putchar('#'); break;
                 case  0: putchar(' '); break;
-                case  1: putchar('0'); break;
+                case  1: putchar('X'); break;
                 default: break;
             }
         }
